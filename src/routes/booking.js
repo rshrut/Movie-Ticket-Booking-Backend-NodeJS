@@ -3,6 +3,7 @@ import { createBooking, getUserBookings, getOccupiedSeats, getBooking } from '..
 import { protect } from '../middleware/auth.js';
 
 const router = express.Router();
+router.get('/occupied/:showtimeId', getOccupiedSeats);
 
 // All booking routes require being logged in
 router.use(protect); 
@@ -10,6 +11,5 @@ router.use(protect);
 router.post('/', createBooking);
 router.get('/user', getUserBookings);
 router.get('/:id', getBooking);
-router.get('/occupied/:showtimeId', getOccupiedSeats);
 
 export default router;
