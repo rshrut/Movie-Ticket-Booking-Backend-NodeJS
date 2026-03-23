@@ -22,33 +22,16 @@ export const seedDatabase = async () => {
             console.log("🎬 Initializing Database with expanded seed data...");
 
             const movies = await Movie.bulkCreate([
-                {
-                    title: "Avengers: Endgame",
-                    posterUrl: "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
-                    genre: "Action, Sci-Fi",
-                    rating: 8.4,
-                    price: 250.0,
-                    city: "Bangalore",
-                    duration: 181
-                },
-                {
-                    title: "Inception",
-                    posterUrl: "https://image.tmdb.org/t/p/w500/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg",
-                    genre: "Sci-Fi, Adventure",
-                    rating: 8.8,
-                    price: 200.0,
-                    city: "Mumbai",
-                    duration: 148
-                },
-                {
-                    title: "The Dark Knight",
-                    posterUrl: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-                    genre: "Action, Crime",
-                    rating: 9.0,
-                    price: 220.0,
-                    city: "Bangalore",
-                    duration: 152
-                }
+                { title: "Interstellar", posterUrl: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6vCU67oQzUDXZ.jpg", genre: "Sci-Fi, Drama", rating: 8.7, price: 250, city: "Bangalore", duration: 169 },
+                { title: "Spider-Man: Across the Spider-Verse", posterUrl: "https://image.tmdb.org/t/p/w500/8VtB9m91Sj9jlyaspXv6Bpz6v0L.jpg", genre: "Animation, Action", rating: 8.9, price: 180, city: "Mumbai", duration: 140 },
+                { title: "Oppenheimer", posterUrl: "https://image.tmdb.org/t/p/w500/8GxvynZTMBLDxWngZzkQ4nzmCcO.jpg", genre: "Drama, History", rating: 8.4, price: 300, city: "Bangalore", duration: 180 },
+                { title: "The Matrix", posterUrl: "https://image.tmdb.org/t/p/w500/f89U3Y9L9UnfAy6mS7nZSRRJuY2.jpg", genre: "Action, Sci-Fi", rating: 8.7, price: 200, city: "Delhi", duration: 136 },
+                { title: "Parasite", posterUrl: "https://image.tmdb.org/t/p/w500/7IiTTj0CcI2aMv69P9qUE39ZJpZ.jpg", genre: "Thriller, Drama", rating: 8.5, price: 180, city: "Bangalore", duration: 132 },
+                { title: "Dune: Part Two", posterUrl: "https://image.tmdb.org/t/p/w500/6MKs3vqzp79pW9iYnNEpQ6O6PRO.jpg", genre: "Sci-Fi, Adventure", rating: 9.0, price: 350, city: "Mumbai", duration: 166 },
+                { title: "The Lion King", posterUrl: "https://image.tmdb.org/t/p/w500/sKCrzHcS1RvmZ90C4zt65vRFS9p.jpg", genre: "Animation, Drama", rating: 8.5, price: 150, city: "Bangalore", duration: 118 },
+                { title: "Joker", posterUrl: "https://image.tmdb.org/t/p/w500/udDcl70jRiiOfV69snWSRSj9Hn6.jpg", genre: "Crime, Thriller", rating: 8.4, price: 220, city: "Delhi", duration: 122 },
+                { title: "Pulp Fiction", posterUrl: "https://image.tmdb.org/t/p/w500/d5iIl9h9btztp9qxcc67G9Zki0U.jpg", genre: "Crime, Drama", rating: 8.9, price: 190, city: "Bangalore", duration: 154 },
+                { title: "The Prestige", posterUrl: "https://image.tmdb.org/t/p/w500/bdN3g8E5pS78TjaQ6vInclPJ9Yn.jpg", genre: "Drama, Mystery", rating: 8.5, price: 210, city: "Mumbai", duration: 130 }
             ]);
 
             // 3. Seed Theatres
@@ -60,20 +43,20 @@ export const seedDatabase = async () => {
 
             // 4. Seed Showtimes
             console.log("⏳ Generating showtimes...");
-            
+
             // Setting "tomorrow" logic like Java LocalDateTime
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             tomorrow.setSeconds(0, 0);
 
             const showtimeData = [];
-            
+
             for (const movie of movies) {
                 for (const theatre of theatres) {
                     // Morning (10:30)
                     const morning = new Date(tomorrow);
                     morning.setHours(10, 30);
-                    
+
                     // Evening (18:45)
                     const evening = new Date(tomorrow);
                     evening.setHours(18, 45);
@@ -89,7 +72,7 @@ export const seedDatabase = async () => {
                     );
                 }
             }
-            
+
             await Showtime.bulkCreate(showtimeData);
             console.log("✅ Seed data successfully loaded.");
         }

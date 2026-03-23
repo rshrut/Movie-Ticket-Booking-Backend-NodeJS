@@ -3,6 +3,13 @@ import { Sequelize } from 'sequelize';
 
 dotenv.config();
 
+const poolConfig = {
+  max: 5,         // Maximum number of connections in pool
+  min: 0,         // Minimum number of connections in pool
+  acquire: 30000, // Maximum time (ms) to try to get a connection before error
+  idle: 10000     // Maximum time (ms) a connection can be idle before being released
+};
+
 // Check if we are in production/Render or local
 export const sequelize = process.env.DATABASE_URL 
   ? new Sequelize(process.env.DATABASE_URL, {
@@ -12,7 +19,8 @@ export const sequelize = process.env.DATABASE_URL
           require: true,
           rejectUnauthorized: false // Required for Neon/Render
         }
-      }
+      },
+      pool: poolConfig
     })
   : new Sequelize(
       process.env.DB_NAME, 
@@ -21,7 +29,8 @@ export const sequelize = process.env.DATABASE_URL
       {
         host: process.env.DB_HOST,
         dialect: 'postgres',
-        port: process.env.DB_PORT
+        port: process.env.DB_PORT,
+        pool: poolConfig
       }
     );
 
